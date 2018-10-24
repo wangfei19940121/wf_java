@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangfei.dao.UserDao">
+    <!--执行查询所有操作-->
+    <select id="searchAll" resultType="com.wangfei.domain.User">
+        select*from USER ;
+    </select>
+    <!--执行删除操作-->
+    <delete id="deleteUser" parameterType="int">
+        DELETE from USER where id=#{aa};
+    </delete>
+    <!--执行根据多个参数查询操作-->
+    <!--<select id="selectBy" parameterType="int,String">-->
+        <!--SELECT *FROM USER WHERE id=#{aa} and username=#{bb};-->
+    <!--</select>-->
+
+    <!--执行模糊查询-->
+    <select id="selectLike"  resultType="com.wangfei.domain.User" parameterType="String">
+        SELECT *from USER WHERE username like #{aa};
+    </select>
+
+    <!--当实体类属性名与表格列名不一样时的查询-->
+    <!--声明查询出的结果字段封装到哪个对应的实体类中-->
+    <resultMap id="userDiffer" type="com.wangfei.domain.UserDif">
+        <!--主键对应-->
+        <id property="userId" column="id"></id>
+        <!--普通属性对应-->
+        <result property="userName" column="username"></result>
+        <result property="userSex" column="sex"></result>
+        <result property="userAddress" column="address"></result>
+        <result property="userBirthday" column="birthday"></result>
+    </resultMap>
+    <select id="selectDif" resultMap="userDiffer">
+        SELECT *FROM  user;
+    </select>
+</mapper>
